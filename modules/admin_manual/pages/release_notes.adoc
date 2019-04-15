@@ -26,23 +26,27 @@ Dear ownCloud administrator, please find below the changes and known issues in o
 
 === Migrations
 
-Please note that this minor release contains database migrations which have an impact on the upgrade duration:
+Please note that this minor release contains database migrations which impact the upgrade duration.
+Specifically:
 
-- The table `oc_share` receives a new column (impact depends on the number of shares)
-- The `oc_authtoken` table's login name column size has been increased (impact depends on the number of recently logged in users plus number of app passwords)
+* The `oc_share` table receives a new column (impact depends on the number of shares)
+* The `oc_authtoken` table's login name column size has been increased (impact depends on the number of recently logged in users plus several app passwords)
 
 === PHP 5.6/7.0 Deprecation
 
-Following the https://doc.owncloud.com/server/admin_manual/release_notes.html#php-5-6-deprecation[PHP 5.6/7.0 deprecation note with the release of ownCloud Server 10.0.8], ownCloud Server 10.2 *does not support PHP 5.6* anymore. If you're still running on 5.6 it is necessary to upgrade to PHP 7 before upgrading to ownCloud Server 10.2. See the xref:installation/system_requirements.adoc#officially-recommended-supported-options[system requirements in the ownCloud documentation]. Also some new app versions do not support older PHP versions anymore. These will not upgrade if your PHP version is not compatible.
+Following the https://doc.owncloud.com/server/admin_manual/release_notes.html#php-5-6-deprecation[PHP 5.6/7.0 deprecation note with the release of ownCloud Server 10.0.8], ownCloud Server 10.2 *no longer supports PHP 5.6*. 
+If you're still running version 5.6, you must upgrade to PHP 7 before upgrading to ownCloud Server 10.2. 
+See the xref:installation/system_requirements.adoc#officially-recommended-supported-options[system requirements in the ownCloud documentation]. 
+Also, some new app versions do not support older PHP versions anymore. These will not upgrade if your PHP version is not compatible.
 
-To provide additional time for upgrades, version 10.2 still supports PHP 7.0 as some major Linux distributions continue to deliver support. To ensure secure and performant operations, support for PHP 7.0 will also be discontinued within the next minor versions of ownCloud 10. Please plan an upgrade soon.
+To allow for additional upgrade time, version 10.2 still supports PHP 7.0 as some major Linux distributions continue to deliver support. Support for PHP 7.0 will be discontinued in an upcoming version of ownCloud 10, to enhance both security and performance. Please plan an upgrade soon.
 
-Apart from this, ownCloud Server is also being prepared for PHP 7.3 support which will become available with the next minor versions.
+Apart from this, ownCloud Server is also being prepared for PHP 7.3 support which will become available in the next, minor, version.
 
 === Advanced Sharing Permissions
 
 The new server version introduces the means for extensions to implement additional, advanced permissions for user and group sharing. This feature increases the sharing flexibility and opens the doors for extension developers to introduce new functionality based on sharing permissions.
-Especially, considering collaborative editing solutions, this addition provides the foundation for mode-based document sharing like "view-only", "comments-only" or "enforce change tracking", for example. In the future such advanced permissions will hugely improve the security as well as the usability for review processes, working on Office documents collaboratively or exchanging information securely.
+Especially, considering collaborative editing solutions, this addition provides the foundation for mode-based document sharing like "view-only", "comments-only" or "enforce change tracking", for example. In the future such advanced permissions will significantly improve the security as well as the usability for review processes, working on Office documents collaboratively or exchanging information securely.
 
 Based on the new capabilities a set of features has been developed together with Collabora Online which is called *Secure View*. *Secure View* is designed to enable information distribution processes for sensitive data, meaning that information can be provided securely but can, under no circumstances, leave the platform.
 Practically, it enables users to share documents (docx/xlsx/pptx/pdf) in a way so that the recipient can't edit, download, copy/paste nor print it. Additional protection for screenshots or photos is provided by watermarks that display user information. Also, users can decide to allow printing/exporting of documents additionally which will be protected with watermarks as well.
@@ -55,29 +59,29 @@ With Server 10.2 a new permission for public links on folders becomes available 
 
 === Storage Encryption with Master Key in HSM
 
-With version 10.2, ownCloud Server officially supports storage encryption with master keys stored in hardware security modules (HSM). In contrast to the regular master key-based storage encryption which stores the keys on the storage, storage encryption with keys in a HSM allows administrators to completely prevent anyone who has access to the storage from accessing the data stored in ownCloud. 
-The bundled `encryption` app has been adapted for HSM support and a standalone service (`hsmdaemon`) that connects ownCloud Server and the HSM device is available within ownCloud Enterprise Edition. To get started with storage encryption and HSM, please get in touch with us (CONTACT).
+With version 10.2, ownCloud Server officially supports storage encryption with master keys stored in hardware security modules (HSM). In contrast to the regular master key-based storage encryption which stores the keys on the storage, storage encryption with keys in an HSM allows administrators to completely prevent anyone who has access to the storage from accessing the data stored in ownCloud. 
+The bundled `encryption` app has been adapted for HSM support, and a standalone service (`hsmdaemon`) that connects ownCloud Server and the HSM device is available within ownCloud Enterprise Edition. To get started with storage encryption and HSM, please get in touch with us (CONTACT).
 For more information around the different encryption types ownCloud offers, consider https://oc.owncloud.com/rs/038-KRL-592/images/Whitepaper_Data_Protection_and_Data_Secrecy_in_ownCloud_EN.pdf[this whitepaper].
 
 - Link to docs
 
 === Background Job for Change Detection of Nested Federated Shares
 
-When using federation to share data across ownCloud instances, deeply nested folders (e.g., folders with many subitems) are not discovered automatically for performance reasons. This leads to several issues like the ownCloud Desktop Client not being able to synchronize newly added or changed content unless the user navigates down the hierarchy using the web interface, manually triggering discovery thereby. Also the size of such folders can't be calculated and shows "Pending" instead until manually triggering the discovery. To cope for this issue while providing the means for administrators to control resource usage, a new `occ` command has been introduced which can be executed regularly as a background job to discover federated shares (`occ incoming-shares:poll`).
+When using federation to share data across ownCloud instances, deeply nested folders (e.g., folders with many subitems) are not discovered automatically for performance reasons. This leads to several issues like the ownCloud Desktop Client not being able to synchronize newly added or changed content unless the user navigates down the hierarchy using the web interface, manually triggering discovery thereby. Also, the size of such folders can't be calculated and shows "Pending" instead until manually triggering the discovery. A new `occ` command has been introduced which can be executed regularly as a background job to discover federated shares (`occ incoming-shares:poll`). This is aimed at handling this issue while providing the means for administrators to control resource usage.
 
-When using federation it is recommended to execute `occ incoming-shares:poll` regularly using CRON. The time interval to choose between executions is a trade-off between the availability of changes in federated shares and resource consumption which naturally depends a lot on the number of federated shares and the frequency of changes within such. As a middle ground it is recommended to execute the command each 15 minutes. Depending on the desired resource consumption this value should be lowered or increased based on individual expectations. To find a value that fits a specific setup it is recommended to execute the command once, measure the execution time and set the interval above that so that the background job can finish before the next execution is triggered.
+When using federation, it is recommended to execute `occ incoming-shares:poll` regularly using CRON. The time interval to choose between executions is a trade-off between the availability of changes in federated shares and resource consumption which naturally depends a lot on the number of federated shares and the frequency of changes within such. As a middle ground, it is recommended to execute the command every 15 minutes. Depending on the desired resource consumption this value should be lowered or increased based on individual expectations. To find a value that fits a specific setup, it is recommended to execute the command once, measure the execution time and set the interval above that so that the background job can finish before the next execution is triggered.
 
 - Link to docs https://github.com/owncloud/docs/issues/856
 
 === New Option to Automatically Accept Federated Shares from Trusted Servers
 
-ownCloud Server 10.0.9 https://doc.owncloud.com/server/10.1/admin_manual/release_notes.html#pending-shares[introduced the *Pending Shares* feature] which basically allows users to decide whether or not they want to accept local user shares instead of just making the decision for them, giving more control thereby. Federated shares, in contrast, always had to be accepted as they can originate from external, potentially untrusted sources. Server 10.2 introduces a global option to automatically accept https://doc.owncloud.com/server/admin_manual/configuration/files/federated_cloud_sharing_configuration.html#configuring-trusted-owncloud-servers[federated shares originating from trusted servers]. This option enables providers of several instances (e.g., an external and an internal instance) to facilitate or automate data exchange between them, not requiring users to accept shares. For security reasons, federated shares from untrusted servers will never be accepted automatically.
+ownCloud Server 10.0.9 https://doc.owncloud.com/server/10.1/admin_manual/release_notes.html#pending-shares[introduced the *Pending Shares* feature] which allows users to decide whether or not they want to accept local user shares instead of just making the decision for them, giving more control thereby. Federated shares, in contrast, always had to be accepted as they can originate from external, potentially untrusted sources. Server 10.2 introduces a global option to automatically accept https://doc.owncloud.com/server/admin_manual/configuration/files/federated_cloud_sharing_configuration.html#configuring-trusted-owncloud-servers[federated shares originating from trusted servers]. This option enables providers of several instances (e.g., an external and an internal instance) to facilitate or automate data exchange between them, not requiring users to accept shares. For security reasons, federated shares from untrusted servers will never be accepted automatically.
 
 === New Privacy and Self-Service Options for Users
 
 In the spirit of self-service, Server 10.2 introduces new options for users that previously were reserved to global admin settings:
 * As discussed in the section above there are global options for *Pending Shares* regarding federated as well as regular user/group shares. To give users more control over the sharing behavior in the scope of their account, user-based override options were introduced that allow users to enable/disable *Pending Shares* independent of an instance's global setting. Users find the two new checkboxes in the 'Sharing' settings panel of personal settings.
-* In addition to the option "_Allow username autocompletion in share dialog_" in the global 'Sharing' settings, users can now autonomously decide to opt-out from autocompletion to protect their privacy. When enabled, other users need to enter a user's full identifier in order to be able to share with them.
+* In addition to the option "_Allow username autocompletion in share dialog_" in the global 'Sharing' settings, users can now autonomously decide to opt-out from autocompletion to protect their privacy. When enabled, other users need to enter a user's full identifier to be able to share with them.
 In contrast to the *Pending Shares* options, this option is not a general override but an opt-out, meaning it can only be used when "_Allow username autocompletion in share dialog_" is enabled. Users find the new checkbox in the 'Sharing' settings panel of personal settings.
 
 === Other notable changes
@@ -85,13 +89,13 @@ In contrast to the *Pending Shares* options, this option is not a general overri
 - Added email footer with motto in email for changing password
 If you use customized email templates, it is necessary to adapt those to incorporate the footer. Please compare the original templates with your custom templates (`core/templates/lostpassword/notify.php` and `core/templates/lostpassword/altnotify.php`).https://github.com/owncloud/core/issues/34467
 - Repair steps can now be executed individually in case one would need to be run again
-Repair steps are employed to clean up and resolve issues from former versions. Usually they run during upgrades but some scenarios make it necessary to run them again. To save time when only specific steps need to be taken, administrators can now individually execute them using `occ maintenance:repair --list` and `occ maintenance:repair --single "<repair step>"`.
-- Command for first run wizard to reset for all users
-In some cases administrators customize the First Run Wizard in order to distribute information to users. Using `occ firstrunwizard:reset-all` you can reset the popup for that it will appear for each user upon their next login.
+Repair steps are employed to clean up and resolve issues from former versions. Usually, they run during upgrades, but some scenarios make it necessary to rerun them. To save time when only specific steps need to be taken, administrators can now individually execute them using `occ maintenance:repair --list` and `occ maintenance:repair --single "<repair step>"`.
+- Command for the first run wizard to reset for all users
+In some cases, administrators customize the First Run Wizard in order to distribute information to users. Using `occ firstrunwizard:reset-all` you can reset the popup so that it will appear for each user upon their next login.
 - Added checkboxes to hide quota and password in user management
 The columns in user management have been made more flexible. Using the bottom left cog wheel you can now hide/show the columns for _Quota_ and _Password_.
-- By default the "apps-external" directory is included in config.php during installation
-For new installations there will be two apps directories to distinguish the bundled apps from the apps that were installed or updated by the administrator. Existing installations will not change but, generally, this separation is recommended in all scenarios as it makes upgrading easier and less error-prone.
+- By default, the "apps-external" directory is included in config.php during installation
+For new installations, there will be two apps directories to distinguish the bundled apps from the apps that were installed or updated by the administrator. Existing installations will not change but, generally, this separation is recommended in all scenarios as it makes upgrading easier and less error-prone.
 - Added `occ files:scan` `--group` and `--groups` options
 The `occ files:scan` command is used to scan resources on the storage and make them available in ownCloud. While previously it could only be used for all or single users, you can now also execute it for groups of users.
 - Allow administrators to enable/disable medial search for users and groups
@@ -101,11 +105,11 @@ Medial search is used to get search results when typing keys within a search ter
 
 - Fixed public link share default expiration behavior https://github.com/owncloud/core/issues/34971[#34971]
 Previously, when a default expiration date for public links had been set by an administrator (without enforcement option), the default value has been applied upon link creation even when a user removed it. The only way to create a link without expiration date was to subsequently edit it and remove the expiration date. This has been fixed to work as expected.
-- Better support for international email addresses after swiftmailer update https://github.com/owncloud/core/issues/34759[#34759]
+- Better support for international email addresses after Swiftmailer update https://github.com/owncloud/core/issues/34759[#34759]
 - Improved speed of apps list settings page by caching integrity check results https://github.com/owncloud/core/issues/34584[#34584]
 - Improved upgrade speed when migrating avatars from OC < 10 https://github.com/owncloud/core/issues/34592[#34592]
 - Improved performance and memory usage of account sync service https://github.com/owncloud/core/issues/34546[#34546]
-- Store quota overrides in preferences table https://github.com/owncloud/core/issues/34467[#34467] => to clarify with tom needham
+- Store quota overrides in preferences table https://github.com/owncloud/core/issues/34467[#34467] => to clarify with Tom Needham
 - Images are again properly rotated now based on EXIF rotation, also affects gallery app https://github.com/owncloud/core/issues/34356[#34356]
 
 === Known issues
