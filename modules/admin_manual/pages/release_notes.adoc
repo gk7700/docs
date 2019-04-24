@@ -36,7 +36,7 @@ Specifically:
 === PHP 5.6/7.0 Deprecation
 
 Following up the https://doc.owncloud.com/server/admin_manual/release_notes.html#php-5-6-deprecation[PHP 5.6/7.0 deprecation notice in the ownCloud Server 10.0.8 releases] ownCloud Server 10.2 *does not support PHP 5.6* and some apps no longer support older PHP versions. 
-Additionally, the next, minor, version of ownCloud Server will support PHP 7.3.
+Additionally, PHP 7.3 support will be available in an upcoming version.
 
 If you're still running PHP 5.6, **you must upgrade to PHP 7 before upgrading to ownCloud Server 10.2**. 
 Please be aware that apps that do not support outdated PHP versions will not upgrade.
