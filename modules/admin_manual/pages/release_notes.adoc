@@ -31,7 +31,7 @@ Please note that this minor release contains database migrations which impact th
 Specifically:
 
 * The `oc_share` table has a new column. The impact of this change depends on the number of shares in your ownCloud installation.
-* The `oc_authtoken` table's login name column size has been increased. The impact depends on the number of recently logged in users plus several app passwords.
+* The `oc_authtoken` table's login name column size has been increased. The impact depends on the number of recently logged in users, and the number of app passwords that have been created.
 
 === PHP 5.6/7.0 Deprecation
 
@@ -62,7 +62,7 @@ What's more, users can decide to allow printing and exporting of documents prote
 === More Granular Permissions for Public Links on Folders
 
 With Server 10.2 a new permission for public links on folders is available for users. 
-It lets recipients view, download, and upload documents, yet prevents them from make changes (e.g., rename, move, collaborative editing). 
+It lets recipients view, download, and upload documents, yet prevents them from making changes (e.g., rename, move, collaborative editing). 
 The new permission, named `Download / View / Edit`, has been added as a replacement for the former `Download / View / Upload`.
 It has been changed and can now be regarded as a public file drop to distribute and gather information with a single link, while preventing recipients from changing contents.
 
@@ -88,7 +88,9 @@ This is aimed at handling this issue while providing the means for administrator
 When using federation, it is recommended to execute `occ incoming-shares:poll` regularly xref:configuration/server/background_jobs_configuration.adoc#cron-jobs[using Cron jobs]. 
 The time interval to choose between executions is a trade-off between the availability of changes in federated shares and resource consumption, which naturally depends a lot on the number of federated shares and the frequency of changes within those shares. 
 
-As a middle ground, we recommend executing the command every 15 minutes. 
+Executing the command once per 12 hours should be safe enough for any instance. 
+However, the interval could be reduced to once per 2 hours for instances with a low number of federated shares.
+
 Depending on the desired resource consumption this value should be lowered or increased based on individual expectations. 
 To find a value that fits a specific setup, it is recommended to execute the command once, measure the execution time and set the interval so that the background job can finish before the next execution is triggered.
 
