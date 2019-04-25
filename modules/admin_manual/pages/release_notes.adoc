@@ -30,8 +30,8 @@ You can also read https://owncloud.org/changelog/server/[the full ownCloud Serve
 Please note that this minor release contains database migrations which impact the upgrade duration.
 Specifically:
 
-* The `oc_share` table has a new column. The impact of this change depends on the number of shares in your ownCloud installation.
-* The `oc_authtoken` table's login name column size has been increased. The impact depends on the number of recently logged in users, and the number of app passwords that have been created.
+* The `oc_share` table has a new column. The time the upgrade takes for this change depends on the number of shares in your ownCloud installation.
+* The `oc_authtoken` table's login name column size has been increased. The time the upgrade takes for this change depends on the number of recently logged in users, and the number of app passwords that have been created.
 
 === PHP 5.6/7.0 Deprecation
 
