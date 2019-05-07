@@ -146,7 +146,7 @@ In the spirit of self-service, ownCloud Server 10.2 introduces new options for u
 * Added two new `occ background:queue` commands: `status` and `delete`.
 ** `status` lists the current background job queue status
 ** `delete` removes a single background job, identified by its id.
-* The version of pear/archive_tar from 1.4.6 to 1.4.7 
+* The minimum version of pear/archive_tar was updated to be 1.4.7.
   
 === Solved Known Issues
 
