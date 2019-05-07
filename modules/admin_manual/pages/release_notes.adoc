@@ -158,7 +158,7 @@ In the spirit of self-service, ownCloud Server 10.2 introduces new options for u
 * Improved speed of apps list settings page by caching integrity check results https://github.com/owncloud/core/issues/34584[#34584]
 * Improved upgrade speed when migrating avatars from oC < 10 https://github.com/owncloud/core/issues/34592[#34592]
 * Improved performance and memory usage of account sync service https://github.com/owncloud/core/issues/34546[#34546]
-* Store quota overrides in preferences table https://github.com/owncloud/core/issues/34467[#34467] => to clarify with Tom Needham
+* Store quota overrides in the `oc_preferences` table https://github.com/owncloud/core/issues/34467[#34467]. In former versions, manual quota changes by the administrator were preserved against those values imported via user backends, such as LDAP. This fix restores the previous functionality.
 * Images are again properly rotated now based on EXIF rotation, also affects gallery app https://github.com/owncloud/core/issues/34356[#34356]
 * An exception is logged when a background job class is not found - https://github.com/owncloud/core/issues/34723[34723]
 
