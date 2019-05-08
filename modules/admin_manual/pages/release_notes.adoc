@@ -61,10 +61,9 @@ What's more, users can decide to allow printing and exporting of documents prote
 
 === More Granular Permissions for Public Links on Folders
 
-With ownCloud Server 10.2, a new permission for public links on folders is available for users. 
-The new permission is named `Download / View / Edit`, and replaces the former `Download / View / Upload`.
-It lets recipients view, download, and upload documents, while preventing them from making changes (e.g., rename, move, collaborative editing). 
-Another way of looking at it is a public file drop for distributing and gathering information with a single link, while preventing recipients from changing contents.
+With ownCloud Server 10.2, a new permission has been added, named: `Download / View / Edit`,. 
+The new permission lets recipients _view_, _download_, and _upload_ documents, yet prevents them from making changes (e.g., _rename_, _move_, and _collaborative editing_). 
+Another way of looking at it is as a public file drop for distributing and gathering information with a single link, yet which prevents recipients from changing file contents.
 
 === Storage Encryption with Master Key in HSM
 
