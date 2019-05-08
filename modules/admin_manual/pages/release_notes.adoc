@@ -33,7 +33,7 @@ Specifically:
 * The `oc_share` table has a new column. The time the upgrade takes for this change depends on the number of shares in your ownCloud installation.
 * The `oc_authtoken` table's login name column size has been increased. The time the upgrade takes for this change depends on the number of recently logged in users, and the number of app passwords that have been created.
 
-=== PHP 5.6/7.0 Deprecation
+=== PHP 5.6 Deprecation
 
 Following up the https://doc.owncloud.com/server/admin_manual/release_notes.html#php-5-6-deprecation[PHP 5.6/7.0 deprecation notice in the ownCloud Server 10.0.8 releases] ownCloud Server 10.2 *does not support PHP 5.6* and some apps no longer support older PHP versions. 
 Additionally, PHP 7.3 support will be available in an upcoming version.
@@ -61,10 +61,10 @@ What's more, users can decide to allow printing and exporting of documents prote
 
 === More Granular Permissions for Public Links on Folders
 
-With Server 10.2 a new permission for public links on folders is available for users. 
-It lets recipients view, download, and upload documents, yet prevents them from making changes (e.g., rename, move, collaborative editing). 
-The new permission, named `Download / View / Edit`, has been added as a replacement for the former `Download / View / Upload`.
-It has been changed and can now be regarded as a public file drop to distribute and gather information with a single link, while preventing recipients from changing contents.
+With ownCloud Server 10.2, a new permission for public links on folders is available for users. 
+The new permission is named `Download / View / Edit`, and replaces the former `Download / View / Upload`.
+It lets recipients view, download, and upload documents, while preventing them from making changes (e.g., rename, move, collaborative editing). 
+Another way of looking at it is a public file drop for distributing and gathering information with a single link, while preventing recipients from changing contents.
 
 === Storage Encryption with Master Key in HSM
 
@@ -120,7 +120,7 @@ In the spirit of self-service, ownCloud Server 10.2 introduces new options for u
 
 * *Added email footer with motto in email for changing passwords.*
   If you use customized email templates, it is necessary to adapt those to incorporate the footer. 
-  Please compare the original templates with your custom templates (`core/templates/lostpassword/notify.php` and `core/templates/lostpassword/altnotify.php`).https://github.com/owncloud/core/issues/34467
+  Please compare the original templates with your custom templates (`core/templates/lostpassword/notify.php` and `core/templates/lostpassword/altnotify.php`).
 * *Repair steps can now be executed individually in case one would need to be run again.*
   Repair steps are employed to clean up and resolve issues from former versions. 
   Usually, they run during upgrades, but some scenarios make it necessary to rerun them. 
@@ -146,8 +146,7 @@ In the spirit of self-service, ownCloud Server 10.2 introduces new options for u
 * Added two new `occ background:queue` commands: `status` and `delete`.
 ** `status` lists the current background job queue status
 ** `delete` removes a single background job, identified by its id.
-* The minimum version of pear/archive_tar was updated to be 1.4.7.
-  
+ 
 === Solved Known Issues
 
 * Fixed public link share default expiration behavior https://github.com/owncloud/core/issues/34971[#34971].
@@ -158,7 +157,7 @@ In the spirit of self-service, ownCloud Server 10.2 introduces new options for u
 * Improved speed of apps list settings page by caching integrity check results https://github.com/owncloud/core/issues/34584[#34584]
 * Improved upgrade speed when migrating avatars from oC < 10 https://github.com/owncloud/core/issues/34592[#34592]
 * Improved performance and memory usage of account sync service https://github.com/owncloud/core/issues/34546[#34546]
-* Store quota overrides in the `oc_preferences` table https://github.com/owncloud/core/issues/34467[#34467]. In former versions, manual quota changes by the administrator were preserved against those values imported via user backends, such as LDAP. This fix restores the previous functionality.
+* Store quota overrides in the `oc_preferences` table https://github.com/owncloud/core/issues/34467[#34467]. In former versions, functionality has been introduced to preserve quota values either imported via LDAP attributes against manual changes by the administrator in ownCloud user management, or via the provisioning API. This functionality works again properly. If you sync accounts from LDAP and have a quota attribute specified in LDAP, each `user:sync` run will set the quota values to the ones from LDAP, no matter if they were changed manually.
 * Images are again properly rotated now based on EXIF rotation, also affects gallery app https://github.com/owncloud/core/issues/34356[#34356]
 * An exception is logged when a background job class is not found - https://github.com/owncloud/core/issues/34723[34723]
 
