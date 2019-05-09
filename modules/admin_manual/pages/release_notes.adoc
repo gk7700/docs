@@ -173,6 +173,7 @@ NOTE: This section will be updated if further issues become known.
 - Add events for user preference changes https://github.com/owncloud/core/issues/34820[#34820]
 - Added CORS headers for many existing API calls, required for Phoenix https://github.com/owncloud/core/issues/34476[#34476]
 - Remove classes that were deprecated since OC 8.0.0: OCP\Config, OCP\PERMISSION_XXX, OCP\Template https://github.com/owncloud/core/issues/34927[#34927]
+- A capability has been added to the Capabilities API to allow clients to check whether the server supports the details parameter for private links, e.g., as a direct link to a resource's sharing or versions tab in the web interface https://github.com/owncloud/core/issues/35104[#35104]
 
 == Changes in 10.1.1
 
